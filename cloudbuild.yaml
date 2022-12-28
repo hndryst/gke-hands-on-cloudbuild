@@ -20,7 +20,7 @@ steps:
       ]
   # run app
   - name: python:3.10.9-slim-bullseye
-    id: Install dependencies for App
+    id: Run app
     entrypoint: python
     args: ["rest.py"]
   # run test
