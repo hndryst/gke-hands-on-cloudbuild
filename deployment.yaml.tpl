@@ -19,6 +19,13 @@ spec:
           image: LOCATION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:SHORT_SHA
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
 ---
 apiVersion: v1
 kind: Service
