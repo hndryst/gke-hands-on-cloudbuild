@@ -21,7 +21,7 @@ def abort_if_exists(task_id):
         abort(409, message="Task already exists with that ID...")
 
 
-class Video(Resource):
+class Task(Resource):
     def get(self, task_id):
         abort_if_not_exists(task_id)
         return tasks[task_id]
@@ -45,9 +45,9 @@ class Health(Resource):
         return Response(status=200)
 
 
-api.add_resource(Video, "/task/<int:task_id>")
+api.add_resource(Task, "/task/<int:task_id>")
 api.add_resource(Health, "/healthz", "/readyz")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
