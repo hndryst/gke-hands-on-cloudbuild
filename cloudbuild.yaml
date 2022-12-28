@@ -19,12 +19,12 @@ steps:
       ]
   - name: python:3.10.9-slim-bullseye
     id: Test app
-    entrypoint: coverage
-    args: ["run", "-m", "pytest", "test.py"]
+    entrypoint: python
+    args: ["-m", "coverage", "run", "-m", "pytest", "test.py"]
   - name: python:3.10.9-slim-bullseye
     id: Show testing result
-    entrypoint: coverage
-    args: ["report", "-m"]
+    entrypoint: python
+    args: ["-m", "coverage", "report", "-m"]
 
   # # build container image
   # - name: "gcr.io/cloud-builders/docker"
