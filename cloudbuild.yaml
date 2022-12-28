@@ -21,7 +21,7 @@ steps:
     entrypoint: coverage
     args: ["run", "-m", "pytest", "test.py"]
   - name: python:3.10.9-slim-bullseye
-    id: Test app
+    id: Show testing result
     entrypoint: coverage
     args: ["report", "-m"]
 
