@@ -30,7 +30,7 @@ steps:
     args: ["run", "-m", "pytest", "test.py"]
   # show test result
   - name: python:3.10.9-slim-bullseye
-    id: Run test
+    id: Show test result
     entrypoint: coverage
     args: ["report", "-m"]
   # # build container image
