@@ -18,7 +18,7 @@ spec:
         - name: flask
           image: LOCATION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:SHORT_SHA
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -31,5 +31,5 @@ spec:
     app: flask
   ports:
     - port: 80
-      targetPort: 5000
+      targetPort: 8080
   type: LoadBalancer
