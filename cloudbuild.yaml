@@ -11,6 +11,7 @@ steps:
         "-m",
         "pip",
         "install",
+        "--user",
         "-r",
         "requirements.txt",
         "-r",
