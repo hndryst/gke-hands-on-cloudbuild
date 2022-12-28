@@ -3,7 +3,7 @@ steps:
   - name: python:3.10.9-slim-bullseye
     id: Initialize pip
     entrypoint: python
-    args: ["-m", "pip", "install", "--upgrade", "--pip"]
+    args: ["-m", "pip", "install", "--upgrade", "pip"]
   # install app dependencies
   - name: python:3.10.9-slim-bullseye
     id: Install dependencies for App
