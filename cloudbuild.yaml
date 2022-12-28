@@ -1,0 +1,97 @@
+steps:
+  # init pip
+  - name: python:3.10.9-slim-bullseye
+    id: Initialize pip
+    entrypoint: python
+    args: ["-m", "pip", "install", "--upgrade", "--pip"]
+  # install app dependencies
+  - name: python:3.10.9-slim-bullseye
+    id: Install dependencies for App
+    entrypoint: python
+    args:
+      [
+        "-m",
+        "pip",
+        "install",
+        "-r",
+        "requirements.txt",
+        "-r",
+        "requirements-test.txt",
+      ]
+  # run app
+  - name: python:3.10.9-slim-bullseye
+    id: Install dependencies for App
+    entrypoint: python
+    args: ["rest.py"]
+  # run test
+  - name: python:3.10.9-slim-bullseye
+    id: Run test
+    entrypoint: coverage
+    args: ["run", "-m", "pytest", "test.py"]
+  # show test result
+  - name: python:3.10.9-slim-bullseye
+    id: Run test
+    entrypoint: coverage
+    args: ["report", "-m"]
+  # # build container image
+  # - name: "gcr.io/cloud-builders/docker"
+  #   id: Build image
+  #   args:
+  #     [
+  #       "build",
+  #       "-t",
+  #       "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$SHORT_SHA",
+  #       ".",
+  #     ]
+  # # push image to Artifact Registry
+  # - name: "gcr.io/cloud-builders/docker"
+  #   id: Push to app source repository
+  #   args:
+  #     [
+  #       "push",
+  #       "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$SHORT_SHA",
+  #     ]
+  # # clone github_hndryst_envoy-proxy-env for modifying k8s deployment value
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   id: Clone env repository
+  #   entrypoint: /bin/sh
+  #   args:
+  #     - "-c"
+  #     - |
+  #       gcloud source repos clone github_hndryst_envoy-proxy-env && \
+  #       cd github_hndryst_envoy-proxy-env && \
+  #       git checkout main && \
+  #       git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+  # # replace deployment value
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   id: Generate manifest
+  #   entrypoint: /bin/sh
+  #   args:
+  #     - "-c"
+  #     - |
+  #       cd github_hndryst_envoy-proxy-env &&
+  #       sed "s/LOCATION/${_LOCATION}/g" deployment.yaml.tpl | \
+  #       sed "s/PROJECT_ID/$PROJECT_ID/g" | \
+  #       sed "s/REPO/${_REPOSITORY}/g" | \
+  #       sed "s/IMAGE/${_IMAGE}/g" | \
+  #       sed "s/SHORT_SHA/$SHORT_SHA/g" > deployment.yaml
+  # # push to envoy-proxy-env
+  # #- name: "gcr.io/cloud-builders/gcloud"
+  # #  id: Push manifest
+  # #  entrypoint: /bin/sh
+  # #  args:
+  # #    - "-c"
+  # #    - |
+  # #      set -x && \
+  # #      cd envoy-proxy-env && \
+  # #      git add deployment.yaml && \
+  # #      git commit -m "Deploying image ${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$SHORT_SHA Built from commit ${COMMIT_SHA} of repository ${_REPOSITORY}"
+  # #      git push origin
+  # # deploy to GKE
+  # - name: "gcr.io/cloud-builders/gke-deploy"
+  #   id: Deploy to GKE
+  #   args:
+  #     - run
+  #     - --filename=github_hndryst_envoy-proxy-env/deployment.yaml
+  #     - --location=asia-southeast2-a
+  #     - --cluster=qris-piloting-cluster
