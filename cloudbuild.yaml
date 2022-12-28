@@ -25,11 +25,11 @@ steps:
   #   args: ["rest.py"]
   # run app
   - name: python:3.10.9-slim-bullseye
-    id: Run test
+    id: Run app
     entrypoint: /bin/sh
     args:
       - -c
-      - "pip install -r requirements.txt -r requirements-test.txt && coverage run -m pytest test.py"
+      - "pip install -r requirements.txt -r requirements-test.txt && python rest.py && coverage run -m pytest test.py"
   # run test
   - name: python:3.10.9-slim-bullseye
     id: Run test
