@@ -41,16 +41,6 @@ steps:
         "push",
         "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$SHORT_SHA",
       ]
-  # - name: "gcr.io/cloud-builders/gcloud"
-  #   id: Clone env repository
-  #   entrypoint: /bin/sh
-  #   args:
-  #     - "-c"
-  #     - |
-  #       gcloud source repos clone github_hndryst_envoy-proxy-env && \
-  #       cd github_hndryst_envoy-proxy-env && \
-  #       git checkout main && \
-  #       git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
   - name: "gcr.io/cloud-builders/gcloud"
     id: Generate manifest
     entrypoint: /bin/sh
