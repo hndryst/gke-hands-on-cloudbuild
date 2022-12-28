@@ -1,45 +1,30 @@
 steps:
-  # init pip
   - name: python:3.10.9-slim-bullseye
     id: Initialize pip
     entrypoint: python
     args: ["-m", "pip", "install", "--upgrade", "pip"]
-  # # install app dependencies
-  # - name: python:3.10.9-slim-bullseye
-  #   id: Install dependencies for App
-  #   entrypoint: python
-  #   args:
-  #     [
-  #       "-m",
-  #       "pip",
-  #       "install",
-  #       "-r",
-  #       "requirements.txt",
-  #       "-r",
-  #       "requirements-test.txt",
-  #     ]
-  # # run app
-  # - name: python:3.10.9-slim-bullseye
-  #   id: Run app
-  #   entrypoint: python
-  #   args: ["rest.py"]
-  # run app
   - name: python:3.10.9-slim-bullseye
-    id: Run app
-    entrypoint: /bin/sh
+    id: Install dependencies for App
+    entrypoint: python
     args:
-      - -c
-      - "pip install -r requirements.txt -r requirements-test.txt && python rest.py && coverage run -m pytest test.py"
-  # run test
+      [
+        "-m",
+        "pip",
+        "install",
+        "-r",
+        "requirements.txt",
+        "-r",
+        "requirements-test.txt",
+      ]
   - name: python:3.10.9-slim-bullseye
-    id: Run test
+    id: Test app
     entrypoint: coverage
     args: ["run", "-m", "pytest", "test.py"]
-  # show test result
   - name: python:3.10.9-slim-bullseye
-    id: Show test result
+    id: Test app
     entrypoint: coverage
     args: ["report", "-m"]
+
   # # build container image
   # - name: "gcr.io/cloud-builders/docker"
   #   id: Build image
