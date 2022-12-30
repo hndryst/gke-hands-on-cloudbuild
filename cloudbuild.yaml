@@ -59,3 +59,5 @@ steps:
       - --filename=deployment.yaml
       - --location=asia-southeast2-a
       - --cluster=workshop-cluster
+options:
+  logging: CLOUD_LOGGING_ONLY
