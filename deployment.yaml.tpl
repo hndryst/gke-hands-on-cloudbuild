@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: LOCATION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:SHORT_SHA
+          image: LOCATION-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:VERSION
           ports:
             - containerPort: 8080
           resources:

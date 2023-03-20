@@ -31,7 +31,7 @@ steps:
       [
         "build",
         "-t",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$SHORT_SHA",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:${_VERSION}",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
@@ -39,7 +39,7 @@ steps:
     args:
       [
         "push",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$SHORT_SHA",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:${_VERSION}",
       ]
   - name: "gcr.io/cloud-builders/gcloud"
     id: Generate manifest
@@ -51,13 +51,13 @@ steps:
         sed "s/PROJECT_ID/$PROJECT_ID/g" | \
         sed "s/REPO/${_REPOSITORY}/g" | \
         sed "s/IMAGE/${_IMAGE}/g" | \
-        sed "s/SHORT_SHA/$SHORT_SHA/g" > deployment.yaml
+        sed "s/VERSION/${_VERSION}/g" > deployment.yaml
   - name: "gcr.io/cloud-builders/gke-deploy"
     id: Deploy to GKE
     args:
       - run
       - --filename=deployment.yaml
-      - --location=asia-southeast2-a
-      - --cluster=workshop-cluster
+      - --location=asia-southeast2
+      - --cluster=cluster-handson-1
 options:
   logging: CLOUD_LOGGING_ONLY
